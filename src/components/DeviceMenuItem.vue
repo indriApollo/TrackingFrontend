@@ -1,11 +1,31 @@
 <script setup>
+import { computed } from 'vue';
 
+const props = defineProps({
+    item: {
+        type: Object,
+        required: true
+    }
+});
+
+const sbClass = computed(() => {
+    switch (props.item.status) {
+        case 0:
+            return 'sb-offline';
+        case 1:
+            return 'sb-driving';
+        case 2:
+            return 'sb-stopped';
+        default:
+            throw `DeviceMenuItem: invalid status ${props.item.status}`;
+    }
+});
 </script>
 
 <template>
     <li class="item-container">
-        <span class="item-name">device name</span>
-        <span class="status-bubble sb-offline"></span>
+        <span class="item-name">{{ item.name }}</span>
+        <span :class="['status-bubble', sbClass]"></span>
         <span class="item-btn">
             <font-awesome-icon icon="fa-solid fa-road" />
         </span>
@@ -36,7 +56,7 @@
     transition-property: width, opacity;
 }
 
-.item-container:hover > .item-btn svg {
+.item-container:hover>.item-btn svg {
     width: 1.5em;
     opacity: 1;
     cursor: pointer;

@@ -1,17 +1,29 @@
 <script setup>
 import DeviceMenuItem from './DeviceMenuItem.vue';
 import DeviceMenuItemInfo from './DeviceMenuItemInfo.vue';
+import { ref } from 'vue';
+
+const itemInfo = ref({
+    voltage: 12.34,
+    datetime: new Date().toLocaleString(),
+    speed: 123
+});
+
+const item = ref({
+    name: 'device name',
+    status: 1
+});
 </script>
 
 <template>
     <div class="menu">
         <ul>
-            <DeviceMenuItem />
-            <DeviceMenuItem />
-            <DeviceMenuItem />
-            <DeviceMenuItem />
+            <DeviceMenuItem :item="item"/>
+            <DeviceMenuItem :item="item"/>
+            <DeviceMenuItem :item="item"/>
+            <DeviceMenuItem :item="item"/>
         </ul>
-        <DeviceMenuItemInfo />
+        <DeviceMenuItemInfo :item-info="itemInfo"/>
     </div>
 </template>
 
