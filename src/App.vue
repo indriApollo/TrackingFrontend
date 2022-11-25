@@ -4,7 +4,7 @@ import Map from "./components/Map.vue";
 </script>
 
 <template>
-  <Map class="bg-full"/>
+  <Map class="bg-full">
   <header>
       <nav>
         <RouterLink to="/">map</RouterLink>
@@ -12,11 +12,12 @@ import Map from "./components/Map.vue";
   </header>
 
   <RouterView />
+  </Map>
 
 </template>
 
 <style scoped>
-  .bg-full {
+  .bg-full >>> #map {
     position: fixed;
     top: 0;
     bottom: 0;

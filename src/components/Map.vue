@@ -7,10 +7,6 @@ import { defineCustomElement } from 'vue';
 
 import MapMarkerCe from './MapMarker.ce.vue';
 
-import eventBus from '../eventBus.js';
-
-eventBus.on("marker-hover", e => console.log(e));
-
 const MapMarker = defineCustomElement(MapMarkerCe);
 customElements.define('ce-map-marker', MapMarker);
 
@@ -22,7 +18,7 @@ const markers = [];
 
 onMounted(() => {
     map = setupMap();
-    addMarker("mine", 4, 51, 0, 'var(--emerald)');
+    addMarker("11", 4, 51, 0, 'var(--emerald)');
 })
 
 function setupMap() {
@@ -35,10 +31,10 @@ function setupMap() {
         .addControl(new mapboxgl.NavigationControl());
 }
 
-function addMarker(markerId, lng, lat, rotation, color) {
+function addMarker(deviceId, lng, lat, rotation, color) {
     const markerContainer = document.createElement("div");
     const markerCE = document.createElement("ce-map-marker");
-    markerCE.setAttribute('marker-id', markerId)
+    markerCE.setAttribute('device-id', deviceId)
     markerContainer.appendChild(markerCE);
     markerContainer.style.width = "27px";
     markerContainer.style.height = "41px";
@@ -55,7 +51,10 @@ function addMarker(markerId, lng, lat, rotation, color) {
 </script>
 
 <template>
-    <div id="map" />
+    <div>
+        <div id="map" />
+        <slot></slot>
+    </div>
 </template>
 
 <style scoped>

@@ -1,20 +1,24 @@
 <script setup>
 import { computed } from 'vue';
-
+import { MovementStatus } from '../models/DeviceModel';
 const props = defineProps({
     item: {
         type: Object,
+        required: true
+    },
+    isActive: {
+        type: Boolean,
         required: true
     }
 });
 
 const sbClass = computed(() => {
     switch (props.item.status) {
-        case 0:
+        case MovementStatus.OFFLINE:
             return 'sb-offline';
-        case 1:
+        case MovementStatus.DRIVING:
             return 'sb-driving';
-        case 2:
+        case MovementStatus.STOPPED:
             return 'sb-stopped';
         default:
             throw `DeviceMenuItem: invalid status ${props.item.status}`;
@@ -23,7 +27,7 @@ const sbClass = computed(() => {
 </script>
 
 <template>
-    <li class="item-container">
+    <li :class="['item-container', { active: isActive }]">
         <span class="item-name">{{ item.name }}</span>
         <span :class="['status-bubble', sbClass]"></span>
         <span class="item-btn">
@@ -33,12 +37,19 @@ const sbClass = computed(() => {
 </template>
 
 <style scoped>
+.active {
+    border-color: var(--peter-river) !important;
+}
+
 .item-container {
     display: flex;
     border-radius: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
+    margin-bottom: 10px;
+    padding: 2px;
     background-color: var(--clouds);
+    border: 3px solid var(--clouds);
+    transition: none 0.2s ease-in-out;
+    transition-property: border;
 }
 
 .item-name {
